@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Client & Invoice Manager</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <header class="navbar">
+        <div class="logo">⚡ FreelanceHub</div>
+        <div class="status-indicator">
+            <span class="dot"></span> DB Connected
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Dashboard Stats Summary -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Clients</h3>
+                <p id="total-clients">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Projects</h3>
+                <p id="active-projects">0</p>
+            </div>
+            <div class="stat-card highlight">
+                <h3>Total Revenue</h3>
+                <p id="total-revenue">$0.00</p>
+            </div>
+        </section>
+
+        <!-- Main Workspace Grid -->
+        <div class="workspace-grid">
+
+            <!-- Left Panel: Client Management -->
+            <section class="card">
+                <h2>Clients</h2>
+
+                <!-- Add Client Form -->
+                <form id="client-form" class="form-group">
+                    <div class="input-field">
+                        <label for="client-name">Client Name</label>
+                        <input type="text" id="client-name" placeholder="e.g. Acme Corp" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="client-email">Email Address</label>
+                        <input type="email" id="client-email" placeholder="e.g. contact@acme.com" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="client-phone">Phone Number</label>
+                        <input type="tel" id="client-phone" placeholder="e.g. +251 00000">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Client</button>
+                </form>
+
+                <!-- Client List -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-list">
+                            <!-- Populated dynamically via JS fetch -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Right Panel: Projects & Billing -->
+            <section class="card">
+                <h2>Projects & Billing</h2>
+
+                <!-- Add Project Form -->
+                <form id="project-form" class="form-group">
+                    <div class="input-field">
+                        <label for="project-client-select">Select Client</label>
+                        <select id="project-client-select" required>
+                            <option value="">Select Client...</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="project-title">Project Title</label>
+                        <input type="text" id="project-title" placeholder="e.g. E-Commerce Redesign" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="project-budget">Budget ($)</label>
+                        <input type="number" id="project-budget" placeholder="0.00" step="0.01" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="project-due-date">Due Date</label>
+                        <input type="date" id="project-due-date" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="project-status">Status</label>
+                        <select id="project-status">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Create Project</button>
+                </form>
+
+                <!-- Projects Table -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Client</th>
+                                <th>Budget</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projects-list">
+                            <!-- Populated dynamically via JS fetch -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>

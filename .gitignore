@@ -1,0 +1,34 @@
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files (Windows + macOS)
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/
+
+# Coverage/test reports
+coverage/
+*.lcov
+
+# Optional: local data or temp files
+*.tmp
+*.swp
