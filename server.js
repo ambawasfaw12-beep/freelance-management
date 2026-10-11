@@ -10,7 +10,8 @@ const port = process.env.port || 5000
 
 app.use(express.json())
 app.use(express.static('public'))
-app.use('/api/client', router)
+app.use('/api/clients', router)
+
 
 app.use(errorHandler)
 
