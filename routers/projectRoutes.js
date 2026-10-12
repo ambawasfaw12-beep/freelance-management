@@ -35,5 +35,20 @@ projectRouter.get('/:id', catchAsync(async (request, response) => {
     response.json(project.rows[0])
 }))
 
+projectRouter.delete('/:id', catchAsync(async (request, response) => {
+    const projectId = request.params.id
+    const deletedProject = await pool.query('DELETE FROM projects WHERE id = $1 RETURNING *;', [projectId])
+
+    if (deletedProject.rows.length === 0) {
+        return response.status(404).json({
+            message: 'Project not found'
+        })
+    }
+    response.status(200).json({
+        message: 'Project deleted successfully',
+        project: deletedProject.rows[0]
+    })
+}))
+
 
 export default projectRouter
