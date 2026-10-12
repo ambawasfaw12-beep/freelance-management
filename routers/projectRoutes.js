@@ -5,8 +5,8 @@ import catchAsync from '../middleware/catchAsync.js'
 const projectRouter = express.Router()
 
 projectRouter.get('/', catchAsync(async (request, response) => {
-    const project = await pool.query('SELECT * FROM projects')
-    response.json(project.rows)
+    const projects = await pool.query('SELECT * FROM projects')
+    response.json(projects.rows)
 }))
 
 projectRouter.post('/', catchAsync(async (request, response) => {
@@ -20,6 +20,19 @@ projectRouter.post('/', catchAsync(async (request, response) => {
         message: 'Project created successfuly',
         project: newProject.rows[0]
     })
+}))
+
+projectRouter.get('/:id', catchAsync(async (request, response) => {
+    const projectId = request.params.id
+    const project = await pool.query('SELECT * FROM projects WHERE id = $1', [projectId])
+
+    if (project.rows.length === 0) {
+        return response.status(404).json({
+            message: 'Project not found'
+        })
+    }
+
+    response.json(project.rows[0])
 }))
 
 
