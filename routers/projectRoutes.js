@@ -50,5 +50,28 @@ projectRouter.delete('/:id', catchAsync(async (request, response) => {
     })
 }))
 
+projectRouter.put('/:id', catchAsync(async (request, response) => {
+
+    const projectId = request.params.id
+    const { clientId, title, budget, status, dueDate } = request.body
+
+
+    const updatedProject = await pool.query(
+        'UPDATE projects SET client_id = $1, title = $2, budget = $3, status = $4, due_date = $5 WHERE id = $6 RETURNING *',
+        [clientId, title, budget, status, dueDate, projectId]
+    )
+
+    if (updatedProject.rows.length === 0) {
+        return response.status(404).json({
+            message: 'Project not found to update'
+        })
+    }
+
+    response.status(200).json({
+        message: 'Project updated successfully',
+        project: updatedProject.rows[0]
+    })
+}))
+
 
 export default projectRouter
