@@ -1,16 +1,16 @@
-import express, { request, response } from 'express'
+import express from 'express'
 import pool from '../database/db.js'
 import catchAsync from '../middleware/catchAsync.js'
 
-const router = express.Router()
+const clientRouter = express.Router()
 
-router.get('/', catchAsync(async (request, response) => {
+clientRouter.get('/', catchAsync(async (request, response) => {
     const client = await pool.query('SELECT * FROM clients')
     response.json(client.rows)
 
 }))
 
-router.post('/', catchAsync(async (request, response) => {
+clientRouter.post('/', catchAsync(async (request, response) => {
     const { clientName, clientEmail, clientPhone } = request.body
     const newdClient = await pool.query('INSERT INTO clients(name, email, phone) values ($1, $2, $3) RETURNING *', [clientName, clientEmail, clientPhone])
     response.status(201).json({
@@ -19,7 +19,7 @@ router.post('/', catchAsync(async (request, response) => {
     })
 }))
 
-router.delete('/:id', catchAsync(async (request, response) => {
+clientRouter.delete('/:id', catchAsync(async (request, response) => {
     const clientId = request.params.id
     const deletedClient = await pool.query('DELETE FROM clients WHERE id = $1 RETURNING *;', [clientId])
 
@@ -34,7 +34,7 @@ router.delete('/:id', catchAsync(async (request, response) => {
     })
 }))
 
-router.put('/:id', catchAsync(async (request, response) => {
+clientRouter.put('/:id', catchAsync(async (request, response) => {
     const clientId = request.params.id
     const { clientName, clientEmail, clientPhone } = request.body
     const updatedClient = await pool.query('UPDATE clients SET name = $1, email = $2, phone = $3 WHERE id = $4 RETURNING *', [clientName, clientEmail, clientPhone, clientId])
@@ -51,4 +51,4 @@ router.put('/:id', catchAsync(async (request, response) => {
     })
 }))
 
-export default router
+export default clientRouter
