@@ -5,8 +5,8 @@ import catchAsync from '../middleware/catchAsync.js'
 const clientRouter = express.Router()
 
 clientRouter.get('/', catchAsync(async (request, response) => {
-    const client = await pool.query('SELECT * FROM clients')
-    response.json(client.rows)
+    const clients = await pool.query('SELECT * FROM clients')
+    response.json(clients.rows)
 
 }))
 
@@ -49,6 +49,19 @@ clientRouter.put('/:id', catchAsync(async (request, response) => {
         message: 'Client updated successfully',
         client: updatedClient.rows[0]
     })
+}))
+
+clientRouter.get('/:id', catchAsync(async (request, response) => {
+    const clientId = request.params.id
+    const client = await pool.query('SELECT * FROM clients WHERE id = $1', [clientId])
+
+    if (client.rows.length === 0) {
+        return response.status(404).json({
+            message: 'Client not found'
+        })
+    }
+
+    response.json(client.rows[0])
 }))
 
 export default clientRouter
