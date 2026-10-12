@@ -19,4 +19,19 @@ router.post('/', catchAsync(async (request, response) => {
     })
 }))
 
+router.delete('/:id', catchAsync( async (request, response) => {
+    const clientId = request.params.id
+    const deletedClient = await pool.query('DELETE FROM clients WHERE id = $1 RETURNING *;',[clientId])
+
+    if(deletedClient.rows.length === 0){
+        return response.status(404).json({
+            message: 'Client not found'
+        })
+    }
+response.status(200).json({
+    message: 'Client deleted successfully',
+    client: deletedClient.rows[0]
+})
+}))
+
 export default router
