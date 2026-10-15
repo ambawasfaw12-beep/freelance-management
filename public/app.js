@@ -82,3 +82,33 @@ const getProject = async () => {
 }
 
 getProject()
+
+// For clients table deletion
+HTMLconst.clientsList.addEventListener('click', async (e) => {
+    if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
+        const clientId = e.target.dataset.id
+
+        const response = await fetch(`/api/clients/${clientId}`, {
+            method: 'DELETE'
+        })
+
+        if (response.ok) {
+            getClient() // Refresh the table
+        }
+    }
+})
+
+// For projects table deletion
+HTMLconst.projectsList.addEventListener('click', async (e) => {
+    if (e.target.tagName === 'BUTTON' && e.target.dataset.id) {
+        const projectId = e.target.dataset.id
+
+        const response = await fetch(`/api/projects/${projectId}`, {
+            method: 'DELETE'
+        })
+
+        if (response.ok) {
+            getProject() // Refresh the table
+        }
+    }
+})
